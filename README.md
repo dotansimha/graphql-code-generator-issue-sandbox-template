@@ -1,0 +1,1 @@
+# graphql-code-generator-issue-sandbox-template
