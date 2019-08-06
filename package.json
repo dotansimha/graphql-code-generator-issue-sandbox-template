@@ -2,6 +2,8 @@
   "name": "graphql-codegen-issue-template",
   "version": "1.0.0",
   "scripts": {
+    "postinstall": "yarn codegen",
+    "generate": "yarn codegen",
     "codegen": "graphql-codegen --config ./codegen.yml"
   },
   "dependencies": {
