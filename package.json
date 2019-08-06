@@ -1,0 +1,19 @@
+{
+  "name": "graphql-codegen-issue-template",
+  "version": "1.0.0",
+  "scripts": {
+    "codegen": "graphql-codegen --config ./codegen.yml"
+  },
+  "dependencies": {
+    "@graphql-codegen/add": "1.4.0",
+    "@graphql-codegen/cli": "1.4.0",
+    "@graphql-codegen/typescript": "1.4.0",
+    "@graphql-codegen/typescript-operations": "1.4.0",
+    "graphql": "14.4.2",
+    "@types/graphql": "14.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
+  "keywords": []
+}
