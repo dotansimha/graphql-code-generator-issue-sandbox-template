@@ -11,6 +11,6 @@
     "@graphql-codegen/cli": "1.13.5",
     "@graphql-codegen/typescript": "1.13.5",
     "@graphql-codegen/typescript-operations": "1.13.5",
-    "graphql": "14.6.0"
+    "graphql": "15.0.0"
   }
 }
