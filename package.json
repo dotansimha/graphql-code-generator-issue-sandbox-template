@@ -7,10 +7,10 @@
     "codegen": "graphql-codegen --config ./codegen.yml"
   },
   "dependencies": {
-    "@graphql-codegen/add": "1.14.0",
-    "@graphql-codegen/cli": "1.14.0",
-    "@graphql-codegen/typescript": "1.14.0",
-    "@graphql-codegen/typescript-operations": "1.14.0",
+    "@graphql-codegen/add": "1.15.2",
+    "@graphql-codegen/cli": "1.15.2",
+    "@graphql-codegen/typescript": "1.15.2",
+    "@graphql-codegen/typescript-operations": "1.15.2",
     "graphql": "15.1.0"
   }
 }
