@@ -1,7 +1,27 @@
-query user {
-    user(id: 1) {
-        id
-        username
-        email
-    }
+query getDeployment($clusterId: String!, $namespace: String!, $name: String!) {
+	getDeployment(clusterId: $clusterId, namespace: $namespace, name: $name) {
+		apiVersion
+		kind
+		metadata {
+			name
+		}
+		spec {
+			template {
+				spec {
+					containers {
+						image
+					}
+				}
+			}
+		}
+		status {
+			availableReplicas
+			unavailableReplicas
+			updatedReplicas
+			readyReplicas
+			replicas
+		}
+	}
 }
+
+
