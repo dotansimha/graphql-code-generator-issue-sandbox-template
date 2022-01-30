@@ -1,9 +1,538 @@
-type Query {
-    user(id: ID!): User!
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
 }
+"whether this query should be cached (Hasura Cloud only)"
+directive @cached("measured in seconds" ttl: Int! = 60, "refresh the cache entry" refresh: Boolean! = false) on QUERY
+scalar Float
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  "does the column match the given case-insensitive pattern"
+  _ilike: String
+  _in: [String!]
+  "does the column match the given POSIX regular expression, case insensitive"
+  _iregex: String
+  _is_null: Boolean
+  "does the column match the given pattern"
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  "does the column NOT match the given case-insensitive pattern"
+  _nilike: String
+  _nin: [String!]
+  "does the column NOT match the given POSIX regular expression, case insensitive"
+  _niregex: String
+  "does the column NOT match the given pattern"
+  _nlike: String
+  "does the column NOT match the given POSIX regular expression, case sensitive"
+  _nregex: String
+  "does the column NOT match the given SQL regular expression"
+  _nsimilar: String
+  "does the column match the given POSIX regular expression, case sensitive"
+  _regex: String
+  "does the column match the given SQL regular expression"
+  _similar: String
+}
+scalar date
+"""
+Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'.
+"""
+input date_comparison_exp {
+  _eq: date
+  _gt: date
+  _gte: date
+  _in: [date!]
+  _is_null: Boolean
+  _lt: date
+  _lte: date
+  _neq: date
+  _nin: [date!]
+}
+"mutation root"
+type mutation_root {
+  """
+  delete data from the table: "org_unit"
+  """
+  delete_org_unit("filter the rows which have to be deleted" where: org_unit_bool_exp!): org_unit_mutation_response
+  """
+  delete single row from the table: "org_unit"
+  """
+  delete_org_unit_by_pk(short_name: String!): org_unit
+  """
+  delete data from the table: "person"
+  """
+  delete_person("filter the rows which have to be deleted" where: person_bool_exp!): person_mutation_response
+  """
+  delete single row from the table: "person"
+  """
+  delete_person_by_pk(id: Int!): person
+  """
+  insert data into the table: "org_unit"
+  """
+  insert_org_unit("the rows to be inserted" objects: [org_unit_insert_input!]!, "on conflict condition" on_conflict: org_unit_on_conflict): org_unit_mutation_response
+  """
+  insert a single row into the table: "org_unit"
+  """
+  insert_org_unit_one("the row to be inserted" object: org_unit_insert_input!, "on conflict condition" on_conflict: org_unit_on_conflict): org_unit
+  """
+  insert data into the table: "person"
+  """
+  insert_person("the rows to be inserted" objects: [person_insert_input!]!, "on conflict condition" on_conflict: person_on_conflict): person_mutation_response
+  """
+  insert a single row into the table: "person"
+  """
+  insert_person_one("the row to be inserted" object: person_insert_input!, "on conflict condition" on_conflict: person_on_conflict): person
+  """
+  update data of the table: "org_unit"
+  """
+  update_org_unit("sets the columns of the filtered rows to the given values" _set: org_unit_set_input, "filter the rows which have to be updated" where: org_unit_bool_exp!): org_unit_mutation_response
+  """
+  update single row of the table: "org_unit"
+  """
+  update_org_unit_by_pk("sets the columns of the filtered rows to the given values" _set: org_unit_set_input, pk_columns: org_unit_pk_columns_input!): org_unit
+  """
+  update data of the table: "person"
+  """
+  update_person("increments the numeric columns with given value of the filtered values" _inc: person_inc_input, "sets the columns of the filtered rows to the given values" _set: person_set_input, "filter the rows which have to be updated" where: person_bool_exp!): person_mutation_response
+  """
+  update single row of the table: "person"
+  """
+  update_person_by_pk("increments the numeric columns with given value of the filtered values" _inc: person_inc_input, "sets the columns of the filtered rows to the given values" _set: person_set_input, pk_columns: person_pk_columns_input!): person
+}
+"column ordering options"
+enum order_by {
+  "in ascending order, nulls last"
+  asc
+  "in ascending order, nulls first"
+  asc_nulls_first
+  "in ascending order, nulls last"
+  asc_nulls_last
+  "in descending order, nulls first"
+  desc
+  "in descending order, nulls first"
+  desc_nulls_first
+  "in descending order, nulls last"
+  desc_nulls_last
+}
+"""
+represents Clubs, CBs and the RFU, etc.
 
-type User {
-    id: ID!
-    username: String!
-    email: String!
+
+columns and relationships of "org_unit"
+
+"""
+type org_unit {
+  legal_name: String!
+  parent: String
+  short_name: String!
+}
+"""
+aggregated selection of "org_unit"
+"""
+type org_unit_aggregate {
+  aggregate: org_unit_aggregate_fields
+  nodes: [org_unit!]!
+}
+"""
+aggregate fields of "org_unit"
+"""
+type org_unit_aggregate_fields {
+  count(columns: [org_unit_select_column!], distinct: Boolean): Int!
+  max: org_unit_max_fields
+  min: org_unit_min_fields
+}
+"""
+Boolean expression to filter rows from the table "org_unit". All fields are combined with a logical 'AND'.
+"""
+input org_unit_bool_exp {
+  _and: [org_unit_bool_exp!]
+  _not: org_unit_bool_exp
+  _or: [org_unit_bool_exp!]
+  legal_name: String_comparison_exp
+  parent: String_comparison_exp
+  short_name: String_comparison_exp
+}
+"""
+unique or primary key constraints on table "org_unit"
+"""
+enum org_unit_constraint {
+  "unique or primary key constraint"
+  org_unit_pkey
+}
+"""
+input type for inserting data into table "org_unit"
+"""
+input org_unit_insert_input {
+  legal_name: String
+  parent: String
+  short_name: String
+}
+"aggregate max on columns"
+type org_unit_max_fields {
+  legal_name: String
+  parent: String
+  short_name: String
+}
+"aggregate min on columns"
+type org_unit_min_fields {
+  legal_name: String
+  parent: String
+  short_name: String
+}
+"""
+response of any mutation on the table "org_unit"
+"""
+type org_unit_mutation_response {
+  "number of rows affected by the mutation"
+  affected_rows: Int!
+  "data from the rows affected by the mutation"
+  returning: [org_unit!]!
+}
+"""
+on conflict condition type for table "org_unit"
+"""
+input org_unit_on_conflict {
+  constraint: org_unit_constraint!
+  update_columns: [org_unit_update_column!]! = []
+  where: org_unit_bool_exp
+}
+"""
+Ordering options when selecting data from "org_unit".
+"""
+input org_unit_order_by {
+  legal_name: order_by
+  parent: order_by
+  short_name: order_by
+}
+"primary key columns input for table: org_unit"
+input org_unit_pk_columns_input {
+  short_name: String!
+}
+"""
+select columns of table "org_unit"
+"""
+enum org_unit_select_column {
+  "column name"
+  legal_name
+  "column name"
+  parent
+  "column name"
+  short_name
+}
+"""
+input type for updating data in table "org_unit"
+"""
+input org_unit_set_input {
+  legal_name: String
+  parent: String
+  short_name: String
+}
+"""
+update columns of table "org_unit"
+"""
+enum org_unit_update_column {
+  "column name"
+  legal_name
+  "column name"
+  parent
+  "column name"
+  short_name
+}
+"""
+represents people involved in or supporting the sport
+
+
+columns and relationships of "person"
+
+"""
+type person {
+  dob: date!
+  family_name: String!
+  gender: String!
+  given_name: String!
+  id: Int!
+  known_as: String
+  other_names: String
+  primary_org_unit: String
+}
+"""
+aggregated selection of "person"
+"""
+type person_aggregate {
+  aggregate: person_aggregate_fields
+  nodes: [person!]!
+}
+"""
+aggregate fields of "person"
+"""
+type person_aggregate_fields {
+  avg: person_avg_fields
+  count(columns: [person_select_column!], distinct: Boolean): Int!
+  max: person_max_fields
+  min: person_min_fields
+  stddev: person_stddev_fields
+  stddev_pop: person_stddev_pop_fields
+  stddev_samp: person_stddev_samp_fields
+  sum: person_sum_fields
+  var_pop: person_var_pop_fields
+  var_samp: person_var_samp_fields
+  variance: person_variance_fields
+}
+"aggregate avg on columns"
+type person_avg_fields {
+  id: Float
+}
+"""
+Boolean expression to filter rows from the table "person". All fields are combined with a logical 'AND'.
+"""
+input person_bool_exp {
+  _and: [person_bool_exp!]
+  _not: person_bool_exp
+  _or: [person_bool_exp!]
+  dob: date_comparison_exp
+  family_name: String_comparison_exp
+  gender: String_comparison_exp
+  given_name: String_comparison_exp
+  id: Int_comparison_exp
+  known_as: String_comparison_exp
+  other_names: String_comparison_exp
+  primary_org_unit: String_comparison_exp
+}
+"""
+unique or primary key constraints on table "person"
+"""
+enum person_constraint {
+  "unique or primary key constraint"
+  person_pkey
+}
+"""
+input type for incrementing numeric columns in table "person"
+"""
+input person_inc_input {
+  id: Int
+}
+"""
+input type for inserting data into table "person"
+"""
+input person_insert_input {
+  dob: date
+  family_name: String
+  gender: String
+  given_name: String
+  id: Int
+  known_as: String
+  other_names: String
+  primary_org_unit: String
+}
+"aggregate max on columns"
+type person_max_fields {
+  dob: date
+  family_name: String
+  gender: String
+  given_name: String
+  id: Int
+  known_as: String
+  other_names: String
+  primary_org_unit: String
+}
+"aggregate min on columns"
+type person_min_fields {
+  dob: date
+  family_name: String
+  gender: String
+  given_name: String
+  id: Int
+  known_as: String
+  other_names: String
+  primary_org_unit: String
+}
+"""
+response of any mutation on the table "person"
+"""
+type person_mutation_response {
+  "number of rows affected by the mutation"
+  affected_rows: Int!
+  "data from the rows affected by the mutation"
+  returning: [person!]!
+}
+"""
+on conflict condition type for table "person"
+"""
+input person_on_conflict {
+  constraint: person_constraint!
+  update_columns: [person_update_column!]! = []
+  where: person_bool_exp
+}
+"""
+Ordering options when selecting data from "person".
+"""
+input person_order_by {
+  dob: order_by
+  family_name: order_by
+  gender: order_by
+  given_name: order_by
+  id: order_by
+  known_as: order_by
+  other_names: order_by
+  primary_org_unit: order_by
+}
+"primary key columns input for table: person"
+input person_pk_columns_input {
+  id: Int!
+}
+"""
+select columns of table "person"
+"""
+enum person_select_column {
+  "column name"
+  dob
+  "column name"
+  family_name
+  "column name"
+  gender
+  "column name"
+  given_name
+  "column name"
+  id
+  "column name"
+  known_as
+  "column name"
+  other_names
+  "column name"
+  primary_org_unit
+}
+"""
+input type for updating data in table "person"
+"""
+input person_set_input {
+  dob: date
+  family_name: String
+  gender: String
+  given_name: String
+  id: Int
+  known_as: String
+  other_names: String
+  primary_org_unit: String
+}
+"aggregate stddev on columns"
+type person_stddev_fields {
+  id: Float
+}
+"aggregate stddev_pop on columns"
+type person_stddev_pop_fields {
+  id: Float
+}
+"aggregate stddev_samp on columns"
+type person_stddev_samp_fields {
+  id: Float
+}
+"aggregate sum on columns"
+type person_sum_fields {
+  id: Int
+}
+"""
+update columns of table "person"
+"""
+enum person_update_column {
+  "column name"
+  dob
+  "column name"
+  family_name
+  "column name"
+  gender
+  "column name"
+  given_name
+  "column name"
+  id
+  "column name"
+  known_as
+  "column name"
+  other_names
+  "column name"
+  primary_org_unit
+}
+"aggregate var_pop on columns"
+type person_var_pop_fields {
+  id: Float
+}
+"aggregate var_samp on columns"
+type person_var_samp_fields {
+  id: Float
+}
+"aggregate variance on columns"
+type person_variance_fields {
+  id: Float
+}
+type query_root {
+  """
+  fetch data from the table: "org_unit"
+  """
+  org_unit("distinct select on columns" distinct_on: [org_unit_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [org_unit_order_by!], "filter the rows returned" where: org_unit_bool_exp): [org_unit!]!
+  """
+  fetch aggregated fields from the table: "org_unit"
+  """
+  org_unit_aggregate("distinct select on columns" distinct_on: [org_unit_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [org_unit_order_by!], "filter the rows returned" where: org_unit_bool_exp): org_unit_aggregate!
+  """
+  fetch data from the table: "org_unit" using primary key columns
+  """
+  org_unit_by_pk(short_name: String!): org_unit
+  """
+  fetch data from the table: "person"
+  """
+  person("distinct select on columns" distinct_on: [person_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [person_order_by!], "filter the rows returned" where: person_bool_exp): [person!]!
+  """
+  fetch aggregated fields from the table: "person"
+  """
+  person_aggregate("distinct select on columns" distinct_on: [person_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [person_order_by!], "filter the rows returned" where: person_bool_exp): person_aggregate!
+  """
+  fetch data from the table: "person" using primary key columns
+  """
+  person_by_pk(id: Int!): person
+}
+type subscription_root {
+  """
+  fetch data from the table: "org_unit"
+  """
+  org_unit("distinct select on columns" distinct_on: [org_unit_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [org_unit_order_by!], "filter the rows returned" where: org_unit_bool_exp): [org_unit!]!
+  """
+  fetch aggregated fields from the table: "org_unit"
+  """
+  org_unit_aggregate("distinct select on columns" distinct_on: [org_unit_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [org_unit_order_by!], "filter the rows returned" where: org_unit_bool_exp): org_unit_aggregate!
+  """
+  fetch data from the table: "org_unit" using primary key columns
+  """
+  org_unit_by_pk(short_name: String!): org_unit
+  """
+  fetch data from the table: "person"
+  """
+  person("distinct select on columns" distinct_on: [person_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [person_order_by!], "filter the rows returned" where: person_bool_exp): [person!]!
+  """
+  fetch aggregated fields from the table: "person"
+  """
+  person_aggregate("distinct select on columns" distinct_on: [person_select_column!], "limit the number of rows returned" limit: Int, "skip the first n rows. Use only with order_by" offset: Int, "sort the rows by one or more columns" order_by: [person_order_by!], "filter the rows returned" where: person_bool_exp): person_aggregate!
+  """
+  fetch data from the table: "person" using primary key columns
+  """
+  person_by_pk(id: Int!): person
 }

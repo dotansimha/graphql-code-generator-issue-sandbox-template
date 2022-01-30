@@ -1,7 +1,7 @@
-query user {
-    user(id: 1) {
-        id
-        username
-        email
-    }
+query allOrgUnits($search: String) {
+	org_unit(where: { short_name: { _like: $search } }) {
+		short_name
+		legal_name
+		parent
+	}
 }
