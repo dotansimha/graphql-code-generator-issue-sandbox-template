@@ -1,6 +1,6 @@
 overwrite: true
 watch: true
-schema: 'http://localhost:8080/v1/graphql'
+schema: schema.graphql.json
 documents: 'graphql/**/**.gql'
 generates:
   types.ts:
@@ -19,6 +19,3 @@ generates:
       - 'typescript'
       - 'typescript-operations'
       - 'typescript-vue-urql'
-  schema.graphql.json:
-    plugins:
-      - 'introspection'
