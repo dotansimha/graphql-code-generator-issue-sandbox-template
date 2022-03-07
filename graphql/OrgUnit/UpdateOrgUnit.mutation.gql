@@ -1,0 +1,9 @@
+#import './OrgUnit.fragment.gql'
+mutation UpdateOrgUnit($id: uuid!, $name: String, $parent: uuid) {
+  update_OrgUnit_by_pk(
+    pk_columns: { id: $id }
+    _set: { name: $name, parent_orgunit: $parent }
+  ) {
+    ...OrgUnitFragment
+  }
+}

@@ -1,0 +1,5 @@
+fragment OrgUnitFragment on OrgUnit {
+  id
+  name
+  parent_orgunit
+}

@@ -1,0 +1,6 @@
+#import './OrgUnit.fragment.gql'
+mutation DeleteOrgUnit($id: uuid!) {
+  delete_OrgUnit_by_pk(id: $id) {
+    ...OrgUnitFragment
+  }
+}

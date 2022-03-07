@@ -1,0 +1,7 @@
+#import './OrgUnit.fragment.gql'
+
+query GetAllOrgUnits {
+  OrgUnit {
+    ...OrgUnitFragment
+  }
+}

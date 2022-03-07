@@ -1,0 +1,7 @@
+#import './OrgUnit.fragment.gql'
+
+mutation CreateOrgUnit($name: String!, $parent: uuid!) {
+  insert_OrgUnit_one(object: { name: $name, parent_orgunit: $parent }) {
+    ...OrgUnitFragment
+  }
+}
