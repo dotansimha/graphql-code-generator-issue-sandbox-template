@@ -1,4 +1,4 @@
-# `graphql-code-generator` Codesabdbox template
+# `graphql-code-generator` Codesandbox template
 
 You can use this repo in order to quickly create a template for reproducing issues related to `graphql-code-generator`. 
 
