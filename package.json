@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "scripts": {
     "generate": "yarn codegen",
-    "start": "graphql-codegen --config ./codegen.yml --watch",
-    "codegen": "graphql-codegen --config ./codegen.yml"
+    "start": "graphql-codegen --config ./codegen.ts --watch",
+    "codegen": "graphql-codegen --config ./codegen.ts"
   },
   "dependencies": {
-    "@graphql-codegen/add": "^3.1.1",
-    "@graphql-codegen/cli": "^2.4.0",
-    "@graphql-codegen/typescript": "2.7.2",
-    "@graphql-codegen/typescript-operations": "2.5.2",
+    "@graphql-codegen/add": "3.2.1",
+    "@graphql-codegen/cli": "2.13.7",
+    "@graphql-codegen/typescript": "2.8.0",
+    "@graphql-codegen/typescript-operations": "2.5.5",
     "graphql": "^16.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
   }
 }
